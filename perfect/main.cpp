@@ -78,13 +78,13 @@ void CalcCorners(const Mat& H, const Mat& src)
  
 int main()
 {
-	Mat a = imread("33.jpg", 1);//右图  
+	Mat a = imread("33.jpg", 1);//右图 已RGB3通道读取 
 	Mat b = imread("44.jpg", 1);//左图
-	cv::resize(a,a,cv::Size(a.cols / 2, a.rows / 2), (0, 0), (0, 0), cv::INTER_AREA);
+	cv::resize(a,a,cv::Size(a.cols / 2, a.rows / 2), (0, 0), (0, 0), cv::INTER_AREA);  //使用INTER_AREA缩小图片尺寸
 	cv::resize(b,b,cv::Size(b.cols / 2, b.rows / 2), (0, 0), (0, 0), cv::INTER_AREA);
  
 	Ptr<SURF> surf;            //创建方式和OpenCV2中的不一样,并且要加上命名空间xfreatures2d
-	//Ptr<SIFT> sift;						   //否则即使配置好了还是显示SURF为未声明的标识符  
+	//Ptr<SIFT> sift;	   //使用sift效果不理想				   //否则即使配置好了还是显示SURF为未声明的标识符  
 	surf = SURF::create(800);
 	//sift = SIFT::create(800);
  
@@ -102,7 +102,7 @@ int main()
 	
 	cv::Mat keyPointImage1;
         cv::Mat keyPointImage2;
-        drawKeypoints(a, key1, keyPointImage1, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+        drawKeypoints(a, key1, keyPointImage1, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);  //画出关键点
         drawKeypoints(b, key2, keyPointImage2, cv::Scalar::all(-1), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
 
         //显示窗口
@@ -118,7 +118,9 @@ int main()
 	cv::imwrite("key2.jpg",keyPointImage2);
 
 	matcher.match(d, c, matches);             //匹配，数据来源是特征向量，结果存放在DMatch类型里面  
- 
+	Mat outimg,outimg1;	
+	drawMatches(b, key2, a, key1, matches, outimg1, Scalar::all(-1), Scalar::all(-1), vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS); 
+	imwrite("match.jpg",outimg1);
 											  //sort函数对数据进行升序排列
 	sort(matches.begin(), matches.end());     //筛选匹配点，根据match里面特征对的距离从小到大排序
 	vector< DMatch > good_matches;
@@ -128,12 +130,12 @@ int main()
 	{
 		good_matches.push_back(matches[i]);//距离最小的50个压入新的DMatch
 	}
-	Mat outimg;                                //drawMatches这个函数直接画出摆在一起的图
+	//Mat outimg;                                //drawMatches这个函数直接画出摆在一起的图
 	drawMatches(b, key2, a, key1, good_matches, outimg, Scalar::all(-1), Scalar::all(-1), vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);  //绘制匹配点  
  
  
 	imshow("桌面", outimg);
-	imwrite("match.jpg",outimg);
+	imwrite("good_match.jpg",outimg);
  
 	///////////////////////图像配准及融合////////////////////////
  
