@@ -127,7 +127,7 @@ int main()
                  goodmatches, img_matches, Scalar::all(-1), Scalar::all(-1),
                  vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
          imshow("good_matches", img_matches);
-         imwrite("good_matches.jpg",img_matches);
+         imwrite("good_matches.jpg",img_matches);  //108行-130行这一段只是显示good_matches，并未实际使用
 
 	sort(matchePoints.begin(),matchePoints.end()); //特征点排序	
 	//sort(goodmatches.begin(),goodmatches.end());
