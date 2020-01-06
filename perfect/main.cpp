@@ -85,10 +85,11 @@ int main()
  
 	Ptr<SURF> surf;            //创建方式和OpenCV2中的不一样,并且要加上命名空间xfreatures2d
 	//Ptr<SIFT> sift;	   //使用sift效果不理想				   //否则即使配置好了还是显示SURF为未声明的标识符  
-	surf = SURF::create(800);
+	surf = SURF::create(800);  // 海塞矩阵阈值，在这里调整精度，值越大点越少，越精准
 	//sift = SIFT::create(800);
  
 	BFMatcher matcher;         //实例化一个暴力匹配器
+	//FlannBasedMatcher matcher;
 	Mat c, d;
 	vector<KeyPoint>key1, key2;
 	vector<DMatch> matches;    //DMatch是用来描述匹配好的一对特征点的类，包含这两个点之间的相关信息
@@ -121,6 +122,27 @@ int main()
 	Mat outimg,outimg1;	
 	drawMatches(b, key2, a, key1, matches, outimg1, Scalar::all(-1), Scalar::all(-1), vector<char>(), DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS); 
 	imwrite("match.jpg",outimg1);
+	cout<<"total_matches size="<<matches.size()<<endl;
+	/*   采用Lowe’s算法来进一步获取优秀匹配点
+	FlannBasedMatcher matcher;
+    	vector<vector<DMatch> > matchePoints;
+    	vector<DMatch> GoodMatchePoints;
+
+    	vector<Mat> train_desc(1, imageDesc1);
+    	matcher.add(train_desc);
+    	matcher.train();
+
+    	matcher.knnMatch(imageDesc2, matchePoints, 2);
+    	cout << "total match points: " << matchePoints.size() << endl;
+
+    	// Lowe's algorithm,获取优秀匹配点
+    	for (int i = 0; i < matchePoints.size(); i++)
+    	{
+        	if (matchePoints[i][0].distance < 0.6 * matchePoints[i][1].distance)
+        	{
+            		GoodMatchePoints.push_back(matchePoints[i][0]);
+        	}
+    	}*/
 											  //sort函数对数据进行升序排列
 	sort(matches.begin(), matches.end());     //筛选匹配点，根据match里面特征对的距离从小到大排序
 	vector< DMatch > good_matches;
