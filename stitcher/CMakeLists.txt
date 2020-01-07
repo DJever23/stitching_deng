@@ -7,6 +7,6 @@ endif(COMMAND camke_policy)
 FIND_PACKAGE( OpenCV REQUIRED)
 
 #Declare teh target (an executable)
-ADD_EXECUTABLE(threetype three_type.cpp)
-TARGET_LINK_LIBRARIES(threetype ${OpenCV_LIBS})
+ADD_EXECUTABLE(source_stitcher source_stitcher.cpp)
+TARGET_LINK_LIBRARIES(source_stitcher ${OpenCV_LIBS})
 #MESSAGE(STATUS "OpenCV_LIBS: ${OpenCV_LIBS}")
