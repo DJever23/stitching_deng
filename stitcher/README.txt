@@ -15,3 +15,5 @@
 
 5.stitching.cpp
 opencv源码里的文件
+
+6.source_stitcher.cpp和for_stitcher.cpp可以实现多张图片的全景拼接，并有拼接完成后的裁剪功能（需要针对每一张图片做修改，不能通用）
