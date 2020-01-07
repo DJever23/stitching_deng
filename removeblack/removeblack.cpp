@@ -76,18 +76,21 @@ int imageRemove::removeblack()
 	int down = tmpMat.rows;
 	// 
 	int num = 0;
-	int range = tmpMat.cols / 5;
+	//int range = tmpMat.cols / 5;
 	for(int i = 0; i < tmpMat.rows; i++)
 	{
 		num = 0;
-		for(int j = 0; j < tmpMat.cols; j+=range)
+		//for(int j = 0; j < tmpMat.cols; j+=range)
+		for(int j = 0; j < tmpMat.cols; j++)
 		{
-			if((int)tmpMat.at<uchar>(i,j) <= black)
+			//if((int)tmpMat.at<uchar>(i,j) <= black)
+			if((int)tmpMat.at<uchar>(i,j) >= black)
 			{
 				num++;
 			}
 		}
-		if(num < 5)
+		//if(num < 5)
+		if(num >=0.8* tmpMat.cols)
 		{
 			up = i;
 			break;
@@ -96,31 +99,37 @@ int imageRemove::removeblack()
 	for(int i = tmpMat.rows-1; i >= 0; i--)
 	{
 		num  = 0;
-		for(int j = 0; j < tmpMat.cols; j+=range)
+		//for(int j = 0; j < tmpMat.cols; j+=range)
+		for(int j = 0; j < tmpMat.cols; j++)
 		{
-			if((int)tmpMat.at<uchar>(i,j) <= black)
+			//if((int)tmpMat.at<uchar>(i,j) <= black)
+			if((int)tmpMat.at<uchar>(i,j) >= black)
 			{
 				num ++;
 			}
 		}
-		if(num < 5)
+		//if(num < 5)
+		if(num >=0.8* tmpMat.cols)
 		{
 			down = i;
 			break;
 		}
 	}
-	range = tmpMat.rows / 5;
+	//range = tmpMat.rows / 5;
 	for(int i = 0; i < tmpMat.cols; i++)
 	{
 		num = 0;
-		for(int j = 0; j < tmpMat.rows; j+=range)
+		//for(int j = 0; j < tmpMat.rows; j+=range)
+		for(int j = 0; j < tmpMat.rows; j++)
 		{
-			if((int)tmpMat.at<uchar>(j,i) <= black)
+			//if((int)tmpMat.at<uchar>(j,i) <= black)
+			if((int)tmpMat.at<uchar>(j,i) >= black)
 			{
 				num++;
 			}
 		}
-		if(num < 5)
+		//if(num < 5)
+		if(num >= 0.8*tmpMat.rows)
 		{
 			left = i;
 			break;
@@ -129,14 +138,17 @@ int imageRemove::removeblack()
 	for(int i = tmpMat.cols -1; i >= 0; i--)
 	{
 		num = 0;
-		for(int j = 0; j < tmpMat.rows; j += range)
+		//for(int j = 0; j < tmpMat.rows; j += range)
+		for(int j = 0; j < tmpMat.rows; j++)
 		{
-			if((int)tmpMat.at<uchar>(j,i) <= black)
+			//if((int)tmpMat.at<uchar>(j,i) <= black)
+			if((int)tmpMat.at<uchar>(j,i) >= black)
 			{
 				num++;
 			}
 		}
-		if(num < 5)
+		//if(num < 5)
+		if(num >= 0.8*tmpMat.rows)
 		{
 			right = i;
 			break;
