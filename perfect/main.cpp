@@ -78,8 +78,8 @@ void CalcCorners(const Mat& H, const Mat& src)
  
 int main()
 {
-	Mat a = imread("33.jpg", 1);//右图 已RGB3通道读取 
-	Mat b = imread("44.jpg", 1);//左图
+	Mat a = imread("04.jpg", 1);//右图 已RGB3通道读取 
+	Mat b = imread("03.jpg", 1);//左图
 	cv::resize(a,a,cv::Size(a.cols / 2, a.rows / 2), (0, 0), (0, 0), cv::INTER_AREA);  //使用INTER_AREA缩小图片尺寸
 	cv::resize(b,b,cv::Size(b.cols / 2, b.rows / 2), (0, 0), (0, 0), cv::INTER_AREA);
  
