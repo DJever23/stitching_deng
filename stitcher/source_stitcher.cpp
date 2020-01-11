@@ -213,7 +213,7 @@ int main(int argc, char* argv[])
 
 void parseCmdArgs(int argc, char** argv)
 {
-	for (int i = 1; i < argc; i++)
+	for (int i = 1; i <argc; i++)
 	{
 		Mat img = imread(argv[i]);
 		if (img.empty())
